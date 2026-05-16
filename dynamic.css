@@ -209,3 +209,20 @@ button:hover {
     grid-template-columns: 1fr;
   }
 }
+
+/* ================= HOMEPAGE BUTTON ================= */
+.home-button {
+  text-align: center;       /* center the logo */
+  margin-bottom: 20px;      /* space below logo */
+}
+
+.home-button img {
+  height: 60px;             /* adjust size as needed */
+  cursor: pointer;
+  transition: transform 0.2s ease;
+  display: inline-block;    /* ensures proper centering */
+}
+
+.home-button img:hover {
+  transform: scale(1.05);   /* subtle zoom effect on hover */
+}

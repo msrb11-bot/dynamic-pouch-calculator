@@ -1,3 +1,22 @@
+/* ================= HOMEPAGE BUTTON ================= */
+.home-button {
+  text-align: center;       /* center the logo */
+  margin-bottom: 20px;      /* space below logo */
+}
+
+.home-button img {
+  height: 60px;             /* adjust size as needed */
+  cursor: pointer;
+  transition: transform 0.2s ease;
+  display: inline-block;    /* ensures proper centering */
+}
+
+.home-button img:hover {
+  transform: scale(1.05);   /* subtle zoom effect on hover */
+}
+
+
+
 /* ================= BODY & GLOBAL ================= */
 body {
   font-family: Arial, sans-serif;
@@ -228,8 +247,9 @@ button:disabled {
   border-radius: 6px;
   border: none;
   cursor: pointer;
-  background: rgba(0,0,0,0.05);
-  color: #111;
+  background: #2563eb; /* blue like Calculate */
+  color: white;
+  font-weight: bold;
   transition: 0.2s ease;
 }
 

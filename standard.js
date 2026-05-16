@@ -197,8 +197,31 @@ function populate() {
   data.inkSet.forEach(v => addOption("inkSet", v.name));
   data.whiteInk.forEach(v => addOption("whiteInk", v.name));
   data.markup.forEach(v => addOption("markup", v.name));
+
+    enableCalculateButtonCheck();
 }
 
+function enableCalculateButtonCheck() {
+  const requiredFields = ["size", "material", "pouchType", "quantity", "inkSet", "whiteInk", "markup", "zipper"];
+  const calculateBtn = document.getElementById("calculateBtn");
+
+  function checkFields() {
+    const allSelected = requiredFields.every(id => {
+      const el = document.getElementById(id);
+      return el && el.value && el.value !== "default"; // assuming default option is placeholder
+    });
+
+    calculateBtn.disabled = !allSelected;
+  }
+
+  requiredFields.forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.addEventListener("change", checkFields);
+  });
+
+  // Initial check in case form is pre-filled
+  checkFields();
+}
 
 // ================= ADD OPTION =================
 function addOption(id, value) {
