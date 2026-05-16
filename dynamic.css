@@ -1,10 +1,37 @@
+/* ================= BODY ================= */
 body {
   font-family: Arial, sans-serif;
   background: #f4f6f9;
   margin: 0;
   padding: 30px;
+
+  display: flex;                /* flex container for main layout */
+  flex-direction: column;       /* stack content vertically */
+  align-items: center;          /* center children horizontally */
 }
 
+/* ================= HOMEPAGE BUTTON ================= */
+.home-button {
+  width: 100%;                  /* full width so image can center properly */
+  display: flex;
+  justify-content: center;      /* horizontal centering */
+  align-items: center;          /* vertical centering if needed */
+  margin-bottom: 20px;          /* space below logo */
+}
+
+.home-button img {
+  height: 60px;                 /* adjust size */
+  display: block;               /* ensures proper block centering */
+  margin: 0 auto;               /* horizontal centering */
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.home-button img:hover {
+  transform: scale(1.05);
+}
+
+/* ================= TITLES ================= */
 h1 {
   text-align: center;
   margin-bottom: 20px;
@@ -13,6 +40,7 @@ h1 {
 /* ================= MAIN CONTAINER ================= */
 .container {
   max-width: 1200px;
+  width: 100%;
   margin: auto;
   background: white;
   padding: 25px;
@@ -30,20 +58,9 @@ h1 {
   gap: 20px;
 }
 
-/* ROW 1: WIDTH / HEIGHT / GUSSET */
-.row:nth-child(1) {
-  grid-template-columns: repeat(3, 1fr);
-}
-
-/* ROW 2: QUANTITY / INK / WHITE / MARKUP */
-.row:nth-child(2) {
-  grid-template-columns: repeat(4, 1fr);
-}
-
-/* ROW 3: PRINT / LAM1 / LAM2 / ZIPPER */
-.row:nth-child(3) {
-  grid-template-columns: repeat(4, 1fr);
-}
+.row:nth-child(1) { grid-template-columns: repeat(3, 1fr); }
+.row:nth-child(2) { grid-template-columns: repeat(4, 1fr); }
+.row:nth-child(3) { grid-template-columns: repeat(4, 1fr); }
 
 /* ================= FIELD ================= */
 .field {
@@ -53,7 +70,6 @@ h1 {
   text-align: center;
 }
 
-/* LABEL */
 label {
   font-weight: bold;
   font-size: 13px;
@@ -63,9 +79,7 @@ label {
   width: 100%;
 }
 
-/* INPUTS */
-input,
-select {
+input, select {
   width: 100%;
   padding: 10px;
   border-radius: 8px;
@@ -86,9 +100,7 @@ button {
   cursor: pointer;
 }
 
-button:hover {
-  background: #1e4fd6;
-}
+button:hover { background: #1e4fd6; }
 
 /* ================= OUTPUT AREA ================= */
 #result {
@@ -133,19 +145,10 @@ button:hover {
   gap: 10px;
 }
 
-.result-label {
-  color: rgba(255,255,255,0.75);
-  font-weight: 500;
-}
+.result-label { color: rgba(255,255,255,0.75); font-weight: 500; }
+.result-value { font-weight: 600; color: #ffffff; text-align: right; white-space: nowrap; }
 
-.result-value {
-  font-weight: 600;
-  color: #ffffff;
-  text-align: right;
-  white-space: nowrap;
-}
-
-/* ================= TOTALS SECTION ================= */
+/* ================= TOTALS ================= */
 .totals {
   margin-top: 40px;
   padding: 20px;
@@ -163,7 +166,6 @@ button:hover {
   padding-bottom: 10px;
 }
 
-/* TOTAL ROWS */
 .totals .result-row {
   display: flex;
   justify-content: space-between;
@@ -172,16 +174,9 @@ button:hover {
   font-size: 14px;
 }
 
-.totals .result-label {
-  color: #444;
-}
+.totals .result-label { color: #444; }
+.totals .result-value { font-weight: 600; color: #111; }
 
-.totals .result-value {
-  font-weight: 600;
-  color: #111;
-}
-
-/* FINAL PRICE EMPHASIS */
 .totals .result-row:last-child .result-value {
   color: #16a34a;
   font-size: 15px;
@@ -195,31 +190,10 @@ button:hover {
 
 /* ================= RESPONSIVE ================= */
 @media (max-width: 900px) {
-  .result-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  .row {
-    grid-template-columns: 1fr !important;
-  }
+  .result-grid { grid-template-columns: repeat(2, 1fr); }
+  .row { grid-template-columns: 1fr !important; }
 }
 
 @media (max-width: 500px) {
-  .result-grid {
-    grid-template-columns: 1fr;
-  }
-}
-
-/* ================= HOMEPAGE BUTTON ================= */
-.home-button {
-  display: flex;               /* use flex for perfect centering */
-  justify-content: center;     /* center horizontally */
-  align-items: center;         /* center vertically (if height applies) */
-  margin-bottom: 20px;         /* space below logo */
-}
-
-.home-button img {
-  height: 60px;                /* adjust logo size */
-  cursor: pointer;
-  transition: transform 0.2s ease;
+  .result-grid { grid-template-columns: 1fr; }
 }
