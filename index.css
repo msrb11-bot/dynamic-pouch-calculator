@@ -89,20 +89,15 @@ p {
   font-size: 40px;
   letter-spacing: 0.3px;
 }
-
-/* ================= HOMEPAGE BUTTON ================= */
 .home-button {
-  text-align: center;       /* center the logo */
-  margin-bottom: 20px;      /* space below logo */
+  display: flex;               /* use flex for perfect centering */
+  justify-content: center;     /* center horizontally */
+  align-items: center;         /* center vertically (if height applies) */
+  margin-bottom: 20px;         /* space below logo */
 }
 
 .home-button img {
-  height: 60px;             /* adjust size as needed */
+  height: 60px;                /* adjust logo size */
   cursor: pointer;
   transition: transform 0.2s ease;
-  display: inline-block;    /* ensures proper centering */
-}
-
-.home-button img:hover {
-  transform: scale(1.05);   /* subtle zoom effect on hover */
 }
