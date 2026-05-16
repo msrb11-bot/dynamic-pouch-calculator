@@ -513,7 +513,7 @@ document.getElementById("result").innerHTML = `
     </div>
 
     <div class="result-row highlight">
-      <span class="result-label">Total cost</span>
+      <span class="result-label">Total</span>
       <span class="result-value">R${indigo.total.toFixed(2)}</span>
     </div>
 
