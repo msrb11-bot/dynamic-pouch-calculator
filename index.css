@@ -1,11 +1,32 @@
-
-
-
+/* ================= BODY ================= */
 body {
   font-family: Arial, sans-serif;
   background: #f4f6f9;
   margin: 0;
   padding: 30px;
+
+  display: flex;                /* make body a flex container */
+  flex-direction: column;       /* stack content vertically */
+  align-items: center;          /* center content horizontally */
+}
+
+/* ================= LOGO ================= */
+.home-button {
+  display: flex;               /* use flex for perfect centering */
+  justify-content: center;     /* center horizontally */
+  align-items: center;         /* center vertically */
+  margin-bottom: 30px;         /* space below logo */
+  width: 100%;                 /* take full width of body */
+}
+
+.home-button img {
+  height: 60px;                /* adjust logo size */
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.home-button img:hover {
+  transform: scale(1.05);
 }
 
 /* ================= TITLE ================= */
@@ -26,6 +47,7 @@ p {
 /* ================= HOME GRID ================= */
 .home-container {
   max-width: 900px;
+  width: 100%;                /* ensure grid fits body */
   margin: auto;
 
   display: grid;
@@ -88,16 +110,4 @@ p {
   margin-bottom: 35px;
   font-size: 40px;
   letter-spacing: 0.3px;
-}
-.home-button {
-  display: flex;               /* use flex for perfect centering */
-  justify-content: center;     /* center horizontally */
-  align-items: center;         /* center vertically (if height applies) */
-  margin-bottom: 20px;         /* space below logo */
-}
-
-.home-button img {
-  height: 60px;                /* adjust logo size */
-  cursor: pointer;
-  transition: transform 0.2s ease;
 }
