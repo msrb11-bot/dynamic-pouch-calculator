@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Standard Size Calculator</title>
+  <link rel="stylesheet" href="standard.css">
+</head>
+
+<body>
+
+<h1>STANDARD SIZE POUCH QUOTE SYSTEM</h1>
+
+<div class="container">
+
+  <!-- ================= ROW 1 ================= -->
+  <div class="row row-1">
+
+    <div class="field">
+      <label>Size</label>
+      <select id="size">
+        <option value="" selected disabled>Select size...</option>
+      </select>
+    </div>
+
+    <div class="field">
+      <label>Material</label>
+      <select id="material">
+        <option value="" selected disabled>Select material...</option>
+      </select>
+    </div>
+
+    <div class="field">
+      <label>Pouch Type</label>
+      <select id="pouchType">
+        <option value="" selected disabled>Select pouch type...</option>
+      </select>
+    </div>
+
+    <div class="field">
+      <label>Quantity</label>
+      <select id="quantity">
+        <option value="" selected disabled>Select quantity...</option>
+      </select>
+    </div>
+
+  </div>
+
+  <!-- ================= ROW 2 ================= -->
+  <div class="row row-2">
+
+    <div class="field">
+      <label>Zipper Required</label>
+      <select id="zipper">
+        <option value="" selected disabled>Select...</option>
+        <option value="yes">Yes</option>
+        <option value="no">No</option>
+      </select>
+    </div>
+
+    <div class="field">
+      <label>Ink Set</label>
+      <select id="inkSet">
+        <option value="" selected disabled>Select ink set...</option>
+      </select>
+    </div>
+
+    <div class="field">
+      <label>White Ink</label>
+      <select id="whiteInk">
+        <option value="" selected disabled>Select white ink...</option>
+      </select>
+    </div>
+
+  </div>
+
+  <!-- ================= ROW 3 ================= -->
+  <div class="row row-3">
+
+    <div class="field">
+      <label>Markup</label>
+      <select id="markup">
+        <option value="" selected disabled>Select markup...</option>
+      </select>
+    </div>
+
+  </div>
+
+  <!-- ================= BUTTON ================= -->
+  <div class="row button-row">
+    <button onclick="calculate()">Calculate Price</button>
+  </div>
+
+</div>
+
+<!-- OUTPUT -->
+<div id="result"></div>
+
+<script src="standard.js"></script>
+
+</body>
+</html>

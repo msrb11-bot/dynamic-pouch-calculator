@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Dynamic Pouch Calculator</title>
+  <link rel="stylesheet" href="dynamic.css">
+</head>
+
+<body>
+
+<h1>DYNAMIC POUCH CALCULATOR</h1>
+
+<div class="container">
+
+  <!-- ROW 1: DIMENSIONS -->
+  <div class="row">
+    <div class="field">
+      <label>Pouch Width (mm)</label>
+      <input type="number" id="pouchWidth">
+    </div>
+
+    <div class="field">
+      <label>Pouch Height (mm)</label>
+      <input type="number" id="pouchHeight">
+    </div>
+
+    <div class="field">
+      <label>Gusset (mm)</label>
+      <input type="number" id="gusset">
+    </div>
+  </div>
+
+  <!-- ROW 2: JOB SETTINGS -->
+  <div class="row">
+    <div class="field">
+      <label>Quantity</label>
+      <select id="quantity"></select>
+    </div>
+
+    <div class="field">
+      <label>Ink Set</label>
+      <select id="inkSet"></select>
+    </div>
+
+    <div class="field">
+      <label>White Ink</label>
+      <select id="whiteInk"></select>
+    </div>
+
+    <div class="field">
+      <label>Markup</label>
+      <select id="markup"></select>
+    </div>
+  </div>
+
+  <!-- ROW 3: MATERIALS -->
+  <div class="row">
+    <div class="field">
+      <label>Print Layer</label>
+      <select id="printLayer"></select>
+    </div>
+
+    <div class="field">
+      <label>Lamination Layer 1</label>
+      <select id="lam1"></select>
+    </div>
+
+    <div class="field">
+      <label>Lamination Layer 2</label>
+      <select id="lam2"></select>
+    </div>
+
+    <div class="field">
+      <label>Zipper Required</label>
+      <select id="zipper">
+    <option value="" selected disabled>Select...</option>
+    <option value="yes">Yes</option>
+    <option value="no">No</option>
+      </select>
+    </div>
+  </div>
+
+  <!-- BUTTON -->
+  <button type="button" id="calcBtn" onclick="calculateDynamic()">
+    Calculate Price
+  </button>
+
+</div>
+
+<!-- OUTPUT -->
+<div id="result"></div>
+
+<script src="core.js"></script>
+<script src="dynamic.js"></script>
+
+</body>
+</html>

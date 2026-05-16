@@ -1,0 +1,111 @@
+{
+  "printLayer": [
+  { "name": "PET 12mu", "price": 0.97 },
+  { "name": "LDPE 100mu", "price": 2.50 },
+  { "name": "BOPP 20mu Clear", "price": 1.50 },
+  { "name": "METT BOPP 30mu", "price": 1.65 },
+  { "name": "PP 70mu White", "price": 2.50 },
+  { "name": "PP 80mu Clear", "price": 2.31 }
+],
+
+"lamLayer1": [
+  { "name": "LDPE - EVOH 100mu", "price": 4.00 },
+  { "name": "LDPE - Non EVOH 100mu", "price": 2.50 },
+  { "name": "PET 12mu", "price": 0.97 },
+  { "name": "PP 80mu Clear", "price": 2.10 },
+  { "name": "PP 70mu White", "price": 2.11 },
+  { "name": "THERMAL GLOSS BOPP 25mu", "price": 2.50 },
+  { "name": "THERMAL MATT BOPP 25mu", "price": 2.50 },
+  { "name": "METT BOPP 30mu", "price": 1.65 }
+],
+
+"lamLayer2": [
+  { "name": "LDPE - EVOH 100mu", "price": 4.00 },
+  { "name": "LDPE - Non EVOH 100mu", "price": 2.50 },
+  { "name": "PET 12mu", "price": 0.97 },
+  { "name": "PP 80mu Clear", "price": 2.10 },
+  { "name": "PP 70mu White", "price": 2.11 },
+  { "name": "THERMAL GLOSS BOPP 25mu", "price": 2.50 },
+  { "name": "THERMAL MATT BOPP 25mu", "price": 2.50 },
+  { "name": "METT BOPP 30mu", "price": 1.65 },
+  { "name": "None", "price": 0.00 }
+],
+
+  "size": [
+    { "name": "XS (100ml)", "ppf": 26, "mpf": 1.105 },
+    { "name": "S (250ml)", "ppf": 20, "mpf": 1.1 },
+    { "name": "M (450ml)", "ppf": 8, "mpf": 1.04 },
+    { "name": "L (1000ml)", "ppf": 7, "mpf": 1.12 },
+    { "name": "XL (1500ml)", "ppf": 6, "mpf": 1.092 },
+    { "name": "XXL (2800ml)", "ppf": 4, "mpf": 1.1 }
+  ],
+
+"material": [
+  { "name": "12mu PET/100mu LDPE EVOH", "price": 4.97 },
+  { "name": "12mu PET/100mu LDPE NON EVOH", "price": 3.47 },
+  { "name": "12mu PET/12mu PET/100mu LDPE EVOH", "price": 5.94 },
+  { "name": "12mu PET/12mu PET/100mu LDPE NON EVOH", "price": 4.44 },
+  { "name": "25mu GLOSS THERMAL/30mu MET BOPP/100mu LDPE", "price": 8.15 },
+  { "name": "25mu MATT THERMAL/30mu MET BOPP/100mu LDPE", "price": 8.15 },
+  { "name": "12mu PET/30mu METT BOPP/80mu PP", "price": 4.73 }
+],
+
+  "pouchType": [
+    "two side seal",
+    "three side seal",
+    "standup pouch - no zip",
+    "standup pouch - zip included"
+  ],
+
+  "quantity": [
+    { "value": 500 },
+    { "value": 1000 },
+    { "value": 5000 },
+    { "value": 10000 },
+    { "value": 15000 },
+    { "value": 20000 },
+    { "value": 30000 },
+    { "value": 40000 },
+    { "value": 50000 },
+    { "value": 100000 }
+  ],
+
+  "inkSet": [
+    { "name": "CMY", "price": 2.711 },
+    { "name": "CMYK", "price": 3.6148 },
+    { "name": "CMYKV", "price": 4.5185 },
+    { "name": "CMYKO", "price": 4.5185 },
+    { "name": "CMYKOV", "price": 5.4242 }
+  ],
+
+  "whiteInk": [
+    { "name": "Yes", "price": 1.25 },
+    { "name": "No", "price": 0 },
+    { "name": "Double hit", "price": 2.5 }
+  ],
+
+  "markup": [
+    { "name": "25%", "percent": 0.25 },
+    { "name": "50%", "percent": 0.5 },
+    { "name": "75%", "percent": 0.75 },
+    { "name": "100%", "percent": 1.0 },
+    { "name": "125%", "percent": 1.25 },
+    { "name": "150%", "percent": 1.5 },
+    { "name": "175%", "percent": 1.75 },
+    { "name": "200%", "percent": 2.0 }
+  ],
+
+  "primercost": 0.63,
+  "absorption": 8,
+
+  "laminationsetup": 100,
+  "laminationadhesiveprice": 0.33,
+  "laminationmaintainance": 0.05,
+
+  "slittersetup": 50,
+  "slittermaintainance": 0.03,
+
+  "pouchsetup": 200,
+  "pouchzipperprice": 0.6,
+  "pouchmaintainance": 0.1
+}
