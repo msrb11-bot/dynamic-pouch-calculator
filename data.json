@@ -10,7 +10,8 @@
 
 "lamLayer1": [
   { "name": "LDPE - EVOH 100mu", "price": 4.00 },
-  { "name": "LDPE - Non EVOH 100mu", "price": 2.50 },
+  { "name": "LDPE - Non EVOH 100mu", "price":3.00 },
+  { "name": "LDPE 50mu", "price": 2.50 },
   { "name": "PET 12mu", "price": 0.97 },
   { "name": "PP 80mu Clear", "price": 2.10 },
   { "name": "PP 70mu White", "price": 2.11 },
@@ -21,14 +22,15 @@
 
 "lamLayer2": [
   { "name": "LDPE - EVOH 100mu", "price": 4.00 },
-  { "name": "LDPE - Non EVOH 100mu", "price": 2.50 },
+  { "name": "LDPE - Non EVOH 100mu", "price":3.00 },
+  { "name": "LDPE 50mu", "price": 2.50 },
   { "name": "PET 12mu", "price": 0.97 },
   { "name": "PP 80mu Clear", "price": 2.10 },
   { "name": "PP 70mu White", "price": 2.11 },
   { "name": "THERMAL GLOSS BOPP 25mu", "price": 2.50 },
   { "name": "THERMAL MATT BOPP 25mu", "price": 2.50 },
   { "name": "METT BOPP 30mu", "price": 1.65 },
-  { "name": "None", "price": 0.00 }
+  { "name": "None", "price": 0.0 }
 ],
 
   "size": [
@@ -42,7 +44,7 @@
 
 "material": [
   { "name": "12mu PET/100mu LDPE EVOH", "price": 4.97 },
-  { "name": "12mu PET/100mu LDPE NON EVOH", "price": 3.47 },
+  { "name": "12mu PET/100mu LDPE NON EVOH", "price": 3.97 },
   { "name": "12mu PET/12mu PET/100mu LDPE EVOH", "price": 5.94 },
   { "name": "12mu PET/12mu PET/100mu LDPE NON EVOH", "price": 4.44 },
   { "name": "25mu GLOSS THERMAL/30mu MET BOPP/100mu LDPE", "price": 8.15 },
@@ -53,8 +55,7 @@
   "pouchType": [
     "two side seal",
     "three side seal",
-    "standup pouch - no zip",
-    "standup pouch - zip included"
+    "standup pouch"
   ],
 
   "quantity": [

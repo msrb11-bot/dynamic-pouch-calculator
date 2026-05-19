@@ -120,7 +120,7 @@ button:disabled { background: #9ca3af; cursor: not-allowed; }
 
 /* ================= RESULT GRID ================= */
 #result {
-  max-width: 1200px;
+  max-width: 1400px;
   margin: 20px auto;
   display: flex;
   flex-direction: column;
@@ -142,6 +142,8 @@ button:disabled { background: #9ca3af; cursor: not-allowed; }
   display: flex;
   flex-direction: column;
   box-shadow: 0 8px 18px rgba(0,0,0,0.15);
+  width: 250px;
+  
 }
 
 .card h3 {

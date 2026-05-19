@@ -20,16 +20,19 @@
 
   <!-- ROW 1: DIMENSIONS -->
   <div class="row">
+
+      <div class="field">
+      <label>Pouch Height (mm)</label>
+      <input type="number" id="pouchHeight">
+    </div>
+
+
     <div class="field">
       <label>Pouch Width (mm)</label>
       <input type="number" id="pouchWidth">
     </div>
 
-    <div class="field">
-      <label>Pouch Height (mm)</label>
-      <input type="number" id="pouchHeight">
-    </div>
-
+  
     <div class="field">
       <label>Gusset (mm)</label>
       <input type="number" id="gusset">
@@ -53,10 +56,22 @@
       <select id="whiteInk"></select>
     </div>
 
-    <div class="field">
-      <label>Markup</label>
-      <select id="markup"></select>
+      <div class="field">
+      <label>Zipper Required</label>
+      <select id="zipper">
+    <option value="" selected disabled>Select...</option>
+    <option value="yes">Yes</option>
+    <option value="no">No</option>
+      </select>
     </div>
+
+    <div class="field">
+      <label>Pouch Type</label>
+      <select id="pouchType">
+        <option value="" selected disabled>Select pouch type...</option>
+      </select>
+    </div>
+
   </div>
 
   <!-- ROW 3: MATERIALS -->
@@ -76,14 +91,7 @@
       <select id="lam2"></select>
     </div>
 
-    <div class="field">
-      <label>Zipper Required</label>
-      <select id="zipper">
-    <option value="" selected disabled>Select...</option>
-    <option value="yes">Yes</option>
-    <option value="no">No</option>
-      </select>
-    </div>
+ 
   </div>
 
   <!-- BUTTON -->

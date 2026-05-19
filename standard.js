@@ -196,13 +196,13 @@ function populate() {
   data.quantity.forEach(v => addOption("quantity", v.value));
   data.inkSet.forEach(v => addOption("inkSet", v.name));
   data.whiteInk.forEach(v => addOption("whiteInk", v.name));
-  data.markup.forEach(v => addOption("markup", v.name));
+ 
 
     enableCalculateButtonCheck();
 }
 
 function enableCalculateButtonCheck() {
-  const requiredFields = ["size", "material", "pouchType", "quantity", "inkSet", "whiteInk", "markup", "zipper"];
+  const requiredFields = ["size", "material", "pouchType", "quantity", "inkSet", "whiteInk", "zipper"];
   const calculateBtn = document.getElementById("calculateBtn");
 
   function checkFields() {
@@ -248,17 +248,17 @@ function calculate() {
 
   const inkSet = clean(document.getElementById("inkSet").value);
   const whiteInk = clean(document.getElementById("whiteInk").value);
-  const markup = clean(document.getElementById("markup").value);
+  
 
   const sizeData = data.size.find(s => s.name === document.getElementById("size").value);
   const materialData = data.material.find(m => m.name === document.getElementById("material").value);
   const inkData = data.inkSet.find(i => i.name === document.getElementById("inkSet").value);
   const whiteData = data.whiteInk.find(w => w.name === document.getElementById("whiteInk").value);
-  const markupData = data.markup.find(m => m.name === document.getElementById("markup").value);
+ 
 
   const zipper = document.getElementById("zipper").value === "yes" ? 1 : 0;
 
-  if (!sizeData || !materialData || !inkData || !whiteData || !markupData) {
+  if (!sizeData || !materialData || !inkData || !whiteData) {
     alert("Missing dropdown data");
     return;
   }
@@ -313,19 +313,19 @@ const productionCost =
   absorptionCost +
   1000;
 
-// Underproduction insurance (NOT marked up)
-const underproductionInsurance = productionCost * 0.10;
+ // Underproduction insurance (marked up)
+const underproductionInsurance = productionCost * 0.10; 
 
 // Markup (FIXED: percent converted properly)
-const markupPercent = Number(markupData.percent || 0);
-const markupValue = productionCost * markupPercent;
+const markupPercent = 1;
+const markupValue = (productionCost + underproductionInsurance) * markupPercent;
 
 // Cost after markup
 const costAfterMarkup =
   productionCost +
   markupValue +
-  absorptionCost +
-  underproductionInsurance;
+  absorptionCost
+  ;
 
 // VAT
 const costBeforeVAT = costAfterMarkup;
@@ -338,6 +338,12 @@ const sellingPrice = costBeforeVAT + vat;
 const ppp = quantity ? sellingPrice / quantity : 0;
 const pouchpricebeforeVAT = quantity ? costBeforeVAT / quantity : 0;
 
+const materialBreakdown = {
+  material: materialData ?? { name: "None", price: 0 },
+
+  totalPerMeter:
+    (materialData?.price ?? 0)
+};
 
 
 // ================= OUTPUT =================
@@ -459,6 +465,11 @@ document.getElementById("result").innerHTML = `
       <span class="result-value">R${pouching.maintenanceCost.toFixed(2)}</span>
     </div>
 
+    <div class="result-row">
+      <span class="result-label">Material cost per meter</span>
+      <span class="result-value">R${materialBreakdown.totalPerMeter.toFixed(2)}</span>
+    </div>
+
     <div class="result-row highlight">
       <span class="result-label">Total</span>
       <span class="result-value">R${pouching.total.toFixed(2)}</span>
@@ -492,20 +503,9 @@ document.getElementById("result").innerHTML = `
     <span class="result-value">R${productionCost.toFixed(2)}</span>
   </div>
 
-  <div class="result-row">
-    <span class="result-label">Underproduction Insurance (10%)</span>
-    <span class="result-value">R${underproductionInsurance.toFixed(2)}</span>
-  </div>
-
-  <div class="divider"></div>
 
   <div class="result-row">
-    <span class="result-label">Markup</span>
-    <span class="result-value">R${markupValue.toFixed(2)}</span>
-  </div>
-
-  <div class="result-row">
-    <span class="result-label">Total cost after markup (incl. absorption + insurance)</span>
+    <span class="result-label">Total cost after markup (incl. absorption)</span>
     <span class="result-value">R${costAfterMarkup.toFixed(2)}</span>
   </div>
 

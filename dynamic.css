@@ -59,8 +59,8 @@ h1 {
 }
 
 .row:nth-child(1) { grid-template-columns: repeat(3, 1fr); }
-.row:nth-child(2) { grid-template-columns: repeat(4, 1fr); }
-.row:nth-child(3) { grid-template-columns: repeat(4, 1fr); }
+.row:nth-child(2) { grid-template-columns: repeat(5, 1fr); }
+.row:nth-child(3) { grid-template-columns: repeat(3, 1fr); }
 
 /* ================= FIELD ================= */
 .field {

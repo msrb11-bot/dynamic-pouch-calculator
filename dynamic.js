@@ -217,7 +217,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // 2. Input validation listeners
 document.querySelectorAll(
-  "#pouchWidth, #pouchHeight, #gusset, #quantity, #inkSet, #whiteInk, #markup, #printLayer, #lam1, #lam2, #zipper"
+  "#pouchWidth, #pouchHeight, #gusset, #quantity, #inkSet, #whiteInk, #printLayer, #lam1, #lam2, #zipper"
 ).forEach(el => {
   el.addEventListener("input", validateInputs);
   el.addEventListener("change", validateInputs);
@@ -236,10 +236,10 @@ function populateDropdowns() {
   fill("quantity", data.quantity);
   fill("inkSet", data.inkSet);
   fill("whiteInk", data.whiteInk);
-  fill("markup", data.markup);
   fill("printLayer", data.printLayer);
   fill("lam1", data.lamLayer1);
   fill("lam2", data.lamLayer2);
+  fill("pouchType", data.pouchType);
 }
 
 function fill(id, arr) {
@@ -248,7 +248,7 @@ function fill(id, arr) {
 
   el.innerHTML = "";
 
-  // 👉 placeholder option (important)
+  // Placeholder
   const placeholder = document.createElement("option");
   placeholder.value = "";
   placeholder.textContent = "Select...";
@@ -258,13 +258,19 @@ function fill(id, arr) {
 
   arr.forEach(item => {
     const opt = document.createElement("option");
-    const value = item.value ?? item.name ?? "";
+
+    // Handles strings OR objects
+    const value =
+      typeof item === "string"
+        ? item
+        : (item.value ?? item.name ?? "");
+
     opt.value = value;
     opt.textContent = value;
+
     el.appendChild(opt);
   });
 }
-
 
 // ================= HELPERS =================
 const clean = v => Number(v || 0);
@@ -278,11 +284,11 @@ function validateInputs() {
     "quantity",
     "inkSet",
     "whiteInk",
-    "markup",
     "printLayer",
     "lam1",
     "lam2",
-    "zipper"
+    "zipper",
+    "pouchType"
   ];
 
   const calcBtn = document.getElementById("calcBtn");
@@ -320,7 +326,6 @@ function calculateDynamic() {
     const quantity = clean(document.getElementById("quantity").value);
     const inkSet = document.getElementById("inkSet").value;
     const whiteInk = document.getElementById("whiteInk").value;
-    const markup = document.getElementById("markup").value;
 
     const lam1 = document.getElementById("lam1").value;
     const lam2 = document.getElementById("lam2").value;
@@ -329,15 +334,12 @@ function calculateDynamic() {
 
     const inkData = data.inkSet.find(i => i.name === inkSet);
     const whiteData = data.whiteInk.find(w => w.name === whiteInk);
-    const markupData = data.markup.find(m => m.name === markup);
+  
 
     const lam1Data = data.lamLayer1.find(l => l.name === lam1);
     const lam2Data = data.lamLayer2.find(l => l.name === lam2);
 
-    if (!markupData) {
-      alert("Missing markup data");
-      return;
-    }
+   
 
 // ================= IMPOSITION =================
 
@@ -421,24 +423,25 @@ const baseCost =
   indigo.total +
   lamination.total +
   slitting.total +
-  pouching.total-
-  indigo.absorptioncost+1000;
+  pouching.total -
+  indigo.absorptioncost +
+  1000;
 
 // Absorption (never marked up)
 const absorptionCost = indigo.absorptioncost;
 
-// Underproduction insurance (also NOT marked up)
+// Underproduction insurance (marked up)
 const underproductionInsurance = baseCost * 0.10;
 
 // ================= MARKUP BASE =================
 // ONLY pure production cost
-const markupBase = baseCost;
+const markupBase = baseCost + underproductionInsurance;
 
 // Markup value
-const mu = markupBase * markupData.percent;
+const mu = markupBase * 1;
 
 // Cost after markup
-const costAfterMarkup = markupBase + mu + absorptionCost + underproductionInsurance;
+const costAfterMarkup = baseCost + mu + absorptionCost;
 
 // ================= BEFORE VAT =================
 // Add non-markup costs AFTER markup
@@ -636,6 +639,11 @@ document.getElementById("result").innerHTML = `
     <span class="result-value">${lam2 || "None"}</span>
   </div>
 
+   <div class="result-row">
+    <span class="result-label">Pouch type</span>
+    <span class="result-value">${document.getElementById("pouchType").value || "None"}</span>
+  </div>
+
   <div class="divider"></div>
 
   <div class="result-row">
@@ -643,21 +651,9 @@ document.getElementById("result").innerHTML = `
     <span class="result-value">R${baseCost.toFixed(2)}</span>
   </div>
 
-  <div class="result-row">
-    <span class="result-label">Underproduction Insurance (10%)</span>
-    <span class="result-value">R${underproductionInsurance.toFixed(2)}</span>
-  </div>
-
-  <div class="divider"></div>
 
   <div class="result-row">
-    <span class="result-label">Markup</span>
-    <span class="result-value">R${mu.toFixed(2)}</span>
-  </div>
-
-
-  <div class="result-row">
-    <span class="result-label">Total cost after markup (incl. absorption + insurance)</span>
+    <span class="result-label">Total cost after markup (incl. absorption)</span>
     <span class="result-value">R${costAfterMarkup.toFixed(2)}</span>
   </div>
 
