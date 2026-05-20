@@ -496,17 +496,33 @@ document.getElementById("result").innerHTML = `
     <span class="result-value">${document.getElementById("pouchType").value || "None"}</span>
   </div>
 
-  <div class="divider"></div>
-
   <div class="result-row">
-    <span class="result-label">Total production costs (excl. absorption cost)</span>
-    <span class="result-value">R${productionCost.toFixed(2)}</span>
+    <span class="result-label">Pouch size</span>
+    <span class="result-value">${document.getElementById("size").value || "None"}</span>
+  </div>
+
+   <div class="result-row">
+    <span class="result-label">Zipper required </span>
+    <span class="result-value">${document.getElementById("zipper").value || "None"}</span>
+  </div>
+
+    <div class="result-row">
+    <span class="result-label">Ink set</span>
+    <span class="result-value">${ document.getElementById("inkSet").value}</span>
   </div>
 
 
   <div class="result-row">
-    <span class="result-label">Total cost after markup (incl. absorption)</span>
-    <span class="result-value">R${costAfterMarkup.toFixed(2)}</span>
+    <span class="result-label">White ink</span>
+    <span class="result-value">${document.getElementById("whiteInk").value}</span>
+  </div>
+
+  <div class="divider"></div>
+
+
+  <div class="result-row">
+    <span class="result-label">VAT</span>
+    <span class="result-value">R${vat.toFixed(2)}</span>
   </div>
 
   <div class="result-row">
@@ -514,12 +530,6 @@ document.getElementById("result").innerHTML = `
     <span class="result-value">R${pouchpricebeforeVAT.toFixed(2)}</span>
   </div>
 
-  <div class="divider"></div>
-
-  <div class="result-row">
-    <span class="result-label">VAT</span>
-    <span class="result-value">R${vat.toFixed(2)}</span>
-  </div>
 
   <div class="divider"></div>
 

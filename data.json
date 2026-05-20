@@ -80,7 +80,7 @@
   ],
 
   "whiteInk": [
-    { "name": "Yes", "price": 1.25 },
+    { "name": "Single hit", "price": 1.25 },
     { "name": "No", "price": 0 },
     { "name": "Double hit", "price": 2.5 }
   ],
