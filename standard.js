@@ -685,6 +685,8 @@ document.getElementById("result").innerHTML = `
     <span class="result-value">${materialData?.name || "None"}</span>
   </div>
 
+  <div class="divider"></div>
+
   <div class="result-row">
     <span class="result-label">Pouch type</span>
     <span class="result-value">${document.getElementById("pouchType").value || "None"}</span>
@@ -705,15 +707,14 @@ document.getElementById("result").innerHTML = `
     <span class="result-value">${sizeData.around || "None"}</span>
   </div>
 
-  <div class="result-row">
-    <span class="result-label">Number of pouches per frame</span>
-    <span class="result-value">${sizeData.ppf || "None"}</span>
-  </div>
+  
 
    <div class="result-row">
     <span class="result-label">Zipper required </span>
     <span class="result-value">${document.getElementById("zipper").value || "None"}</span>
   </div>
+
+  <div class="divider"></div>
 
     <div class="result-row">
     <span class="result-label">Ink set</span>
