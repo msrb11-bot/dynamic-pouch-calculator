@@ -34,12 +34,12 @@
 ],
 
   "size": [
-    { "name": "XS (100ml)", "ppf": 26, "mpf": 1.105 },
-    { "name": "S (250ml)", "ppf": 20, "mpf": 1.1 },
-    { "name": "M (450ml)", "ppf": 8, "mpf": 1.04 },
-    { "name": "L (1000ml)", "ppf": 7, "mpf": 1.12 },
-    { "name": "XL (1500ml)", "ppf": 6, "mpf": 1.092 },
-    { "name": "XXL (2800ml)", "ppf": 4, "mpf": 1.1 }
+    { "name": "XS (100ml)", "ppf": 26, "mpf": 1.105, "around": 13, "across":  2},
+    { "name": "S (250ml)", "ppf": 20, "mpf": 1.1, "around": 10, "across":  2 },
+    { "name": "M (450ml)", "ppf": 8, "mpf": 1.04 , "around": 8, "across":  1},
+    { "name": "L (1000ml)", "ppf": 7, "mpf": 1.12 , "around": 7, "across":  1},
+    { "name": "XL (1500ml)", "ppf": 6, "mpf": 1.092 , "around": 6, "across":  1},
+    { "name": "XXL (2800ml)", "ppf": 4, "mpf": 1.1, "around": 4, "across":  1 }
   ],
 
 "material": [

@@ -1,30 +1,5 @@
 const calcBtn = document.getElementById("calcBtn");
 
-function validateInputs() {
-  const width = document.getElementById("pouchWidth").value;
-  const height = document.getElementById("pouchHeight").value;
-  const gusset = document.getElementById("gusset").value;
-
-  const resultBox = document.getElementById("result");
-
-  if (!width || !height || !gusset) {
-    calcBtn.disabled = true;
-    calcBtn.style.opacity = "0.5";
-
-    resultBox.innerHTML = `
-      <div style="color:red; font-weight:bold; text-align:center;">
-        Please enter Width, Height and Gusset before calculating.
-      </div>
-    `;
-    return false;
-  }
-
-  calcBtn.disabled = false;
-  calcBtn.style.opacity = "1";
-  return true;
-}
-
-
 document.addEventListener("click", async (e) => {
   if (e.target.id === "copySummaryBtn") {
 
@@ -47,7 +22,33 @@ document.addEventListener("click", async (e) => {
       text += `${label}: ${value}\n`;
     });
 
-    text += "\n===========================";
+    // ================= EXTRA VOLUME BENEFIT =================
+const volumeBoxes =
+  clone.querySelectorAll(".volume-box");
+
+if (volumeBoxes.length > 0) {
+
+  text += "\n===== EXTRA VOLUME BENEFIT =====\n\n";
+
+  volumeBoxes.forEach(box => {
+
+    const qty =
+      box.querySelector(".volume-qty")
+        ?.innerText
+        ?.trim();
+
+    const price =
+      box.querySelector(".volume-price")
+        ?.innerText
+        ?.trim();
+
+    if (qty && price) {
+      text += `${qty}: ${price} per pouch\n`;
+    }
+  });
+}
+
+text += "\n===========================";
 
     try {
       await navigator.clipboard.writeText(text);
@@ -339,133 +340,248 @@ function calculateDynamic() {
     const lam1Data = data.lamLayer1.find(l => l.name === lam1);
     const lam2Data = data.lamLayer2.find(l => l.name === lam2);
 
-   
+   // MAIN CURRENT QUANTITY CALC
+  const currentCalc =
+  calculateDynamicSellingPriceForQuantity({
+    quantity,
+    width,
+    height,
+    gusset,
+    printLayerData,
+    lam1Data,
+    lam2Data,
+    inkData,
+    whiteData,
+    zipper,
+    data
+});
+
+const {
+  ppf,
+  around,
+  across,
+  indigo,
+  lamination,
+  slitting,
+  pouching,
+  vat,
+  sellingprice,
+  pricePerPouch,
+  pouchpricebeforeVAT,
+  materialBreakdown
+} = currentCalc;
+
+const ppp = pricePerPouch;
 
 // ================= IMPOSITION =================
 
-// Prevent divide-by-zero
-const safeWidth = width || 1;
-const safeHeight = (2 * height + gusset) || 1;
+// ================= EXTRA VOLUME BENEFIT =================
 
-// Across & Down (ROUNDDOWN = Math.floor)
-const across = Math.floor(1120 / safeWidth);
-const down = Math.floor(746 / safeHeight);
+function calculateDynamicSellingPriceForQuantity({
+  quantity,
+  width,
+  height,
+  gusset,
+  printLayerData,
+  lam1Data,
+  lam2Data,
+  inkData,
+  whiteData,
+  zipper,
+  data
+}) {
 
-// PPF
-const ppf = Math.max(1, across * down);
+  // ================= IMPOSITION =================
+  const safeWidth = width || 1;
+  const safeHeight = (2 * height + gusset) || 1;
 
-// MPF (meters per frame)
-const mpf = (across * safeWidth) / 1000;
+  const around = Math.floor(1120 / safeWidth);
+  const across = Math.floor(746 / safeHeight);
 
-// Setup / waste frames
-const setupFrames = 250;
+  const ppf = Math.max(1, across * around);
 
-// Production print frames
-const printFrames = Math.ceil(quantity / ppf);
+  const mpf = (around * safeWidth) / 1000;
 
-// Total frames including setup
-const totalFrames = printFrames + setupFrames;
+  const setupFrames = 250;
 
-// Meters per frame
-const metersPerFrame = mpf;
+  const printFrames = Math.ceil(quantity / ppf);
 
-// Production meters only
-const baseMeters = printFrames * metersPerFrame;
+  const totalFrames = printFrames + setupFrames;
 
-// Total meters including setup
-const totalMeters = totalFrames * metersPerFrame;
+  const metersPerFrame = mpf;
 
+  const baseMeters = printFrames * metersPerFrame;
 
-// ================= INDIGO =================
-const indigo = calculateIndigoCost({
-      printFrames,
-      totalFrames,
-      meters: baseMeters,
-      totalMeters,
-      inkData,
-      whiteData,
-      primerRate: data.primercost,
-      overhead: data.absorption
-});
+  const totalMeters = totalFrames * metersPerFrame;
 
-// ================= LAMINATION =================
-const lamCostPerMeter = data.laminationadhesiveprice || 0;
+  // ================= INDIGO =================
+  const indigo = calculateIndigoCost({
+    printFrames,
+    totalFrames,
+    meters: baseMeters,
+    totalMeters,
+    inkData,
+    whiteData,
+    primerRate: data.primercost,
+    overhead: data.absorption
+  });
 
-const lamination = calculateLaminationCost({
-      meters: indigo.meters,
-      setupMeters: data.laminationsetup,
-      adhesiveCostPerMeter: lamCostPerMeter,
-      maintenanceCostPerMeter: data.laminationmaintainance
-});
+  // ================= LAMINATION =================
+  const lamination = calculateLaminationCost({
+    meters: indigo.meters,
+    setupMeters: data.laminationsetup,
+    adhesiveCostPerMeter: data.laminationadhesiveprice,
+    maintenanceCostPerMeter: data.laminationmaintainance
+  });
 
-const slitting = calculateSlittingCost({
-  meters: lamination.laminationMeters,
-  setupFrames: data.slittersetup,
-  metersPerFrame,
-  maintenanceCostPerMeter: data.slittermaintainance
-});
+  // ================= SLITTING =================
+  const slitting = calculateSlittingCost({
+    meters: lamination.laminationMeters,
+    setupFrames: data.slittersetup,
+    metersPerFrame,
+    maintenanceCostPerMeter: data.slittermaintainance
+  });
 
-// ================= POUCHING =================
-const pouching = calculatePouchingCost({
-  meters: slitting.slittingMeters,
-  setupFrames: data.pouchsetup,
-  metersPerFrame,
-  maintenanceCostPerMeter: data.pouchmaintainance,
-  zipperCostPerMeter: data.pouchzipperprice * zipper,
-  printLayerCostPerMeter: printLayerData?.price || 0,
-  lam1CostPerMeter: lam1Data?.price || 0,
-  lam2CostPerMeter: lam2Data?.price || 0
-});
+  // ================= POUCHING =================
+  const pouching = calculatePouchingCost({
+    meters: slitting.slittingMeters,
+    setupFrames: data.pouchsetup,
+    metersPerFrame,
+    maintenanceCostPerMeter: data.pouchmaintainance,
+    zipperCostPerMeter: data.pouchzipperprice * zipper,
+    printLayerCostPerMeter: printLayerData?.price || 0,
+    lam1CostPerMeter: lam1Data?.price || 0,
+    lam2CostPerMeter: lam2Data?.price || 0
+  });
 
-// ================= FINAL =================
-// ================= TOTAL PRODUCTION COST =================
-const baseCost =
-  indigo.total +
-  lamination.total +
-  slitting.total +
-  pouching.total -
-  indigo.absorptioncost +
-  1000;
+  // ================= FINAL =================
+  const baseCost =
+    indigo.total +
+    lamination.total +
+    slitting.total +
+    pouching.total -
+    indigo.absorptioncost +
+    1000;
 
-// Absorption (never marked up)
-const absorptionCost = indigo.absorptioncost;
+  const absorptionCost = indigo.absorptioncost;
 
-// Underproduction insurance (marked up)
-const underproductionInsurance = baseCost * 0.10;
+  const underproductionInsurance = baseCost * 0.10;
 
-// ================= MARKUP BASE =================
-// ONLY pure production cost
-const markupBase = baseCost + underproductionInsurance;
+  const markupBase = baseCost + underproductionInsurance;
 
-// Markup value
-const mu = markupBase * 1;
+  const mu = markupBase * 1;
 
-// Cost after markup
-const costAfterMarkup = baseCost + mu + absorptionCost;
+  const costAfterMarkup =
+    baseCost + mu + absorptionCost;
 
-// ================= BEFORE VAT =================
-// Add non-markup costs AFTER markup
-const costBeforeVAT = costAfterMarkup
-const pouchpricebeforeVAT = costBeforeVAT / quantity;
-// VAT
-const vat = costBeforeVAT * 0.15;
+  const costBeforeVAT = costAfterMarkup;
 
-// Final selling price
-const sellingprice = costBeforeVAT + vat;
+  const vat = costBeforeVAT * 0.15;
 
-// Per unit price
-const ppp = quantity ? sellingprice / quantity : 0;
+  const sellingprice =
+    costBeforeVAT + vat;
 
-const materialBreakdown = {
-  printLayer: printLayerData ?? { name: "None", price: 0 },
-  lam1: lam1Data ?? { name: "None", price: 0 },
-  lam2: lam2Data ?? { name: "None", price: 0 },
+  const pricePerPouch =
+    quantity ? sellingprice / quantity : 0;
 
-  totalPerMeter:
-    (printLayerData?.price ?? 0) +
-    (lam1Data?.price ?? 0) +
-    (lam2Data?.price ?? 0)
+ return {
+  quantity,
+  ppf,
+  across,
+  around,
+  indigo,
+  lamination,
+  slitting,
+  pouching,
+  vat,
+  sellingprice,
+  pricePerPouch,
+  pouchpricebeforeVAT: costBeforeVAT / quantity,
+
+  materialBreakdown: {
+    printLayer: printLayerData ?? { name: "None", price: 0 },
+    lam1: lam1Data ?? { name: "None", price: 0 },
+    lam2: lam2Data ?? { name: "None", price: 0 },
+
+    totalPerMeter:
+      (printLayerData?.price ?? 0) +
+      (lam1Data?.price ?? 0) +
+      (lam2Data?.price ?? 0)
+  }
 };
+}
+
+
+// ================= VOLUME OPTIONS =================
+
+const volume1 = currentCalc;
+
+const volume2 = calculateDynamicSellingPriceForQuantity({
+  quantity: quantity * 2,
+  width,
+  height,
+  gusset,
+  printLayerData,
+  lam1Data,
+  lam2Data,
+  inkData,
+  whiteData,
+  zipper,
+  data
+});
+
+const volume3 = calculateDynamicSellingPriceForQuantity({
+  quantity: quantity * 4,
+  width,
+  height,
+  gusset,
+  printLayerData,
+  lam1Data,
+  lam2Data,
+  inkData,
+  whiteData,
+  zipper,
+  data
+});
+
+const volume4 = calculateDynamicSellingPriceForQuantity({
+  quantity: quantity * 8,
+  width,
+  height,
+  gusset,
+  printLayerData,
+  lam1Data,
+  lam2Data,
+  inkData,
+  whiteData,
+  zipper,
+  data
+});
+
+const volume5 = calculateDynamicSellingPriceForQuantity({
+  quantity: quantity * 16,
+  width,
+  height,
+  gusset,
+  printLayerData,
+  lam1Data,
+  lam2Data,
+  inkData,
+  whiteData,
+  zipper,
+  data
+});
+
+const volume2Qty = volume2.quantity;
+const volume3Qty = volume3.quantity;
+const volume4Qty = volume4.quantity;
+const volume5Qty = volume5.quantity;
+
+const volume2Price = volume2.pricePerPouch;
+const volume3Price = volume3.pricePerPouch;
+const volume4Price = volume4.pricePerPouch;
+const volume5Price = volume5.pricePerPouch;
+
 
 // ================= OUTPUT=================
 
@@ -639,6 +755,8 @@ document.getElementById("result").innerHTML = `
     <span class="result-value">${lam2 || "None"}</span>
   </div>
 
+  <div class="divider"></div>
+
    <div class="result-row">
     <span class="result-label">Pouch type</span>
     <span class="result-value">${document.getElementById("pouchType").value || "None"}</span>
@@ -656,6 +774,20 @@ document.getElementById("result").innerHTML = `
     <span class="result-label">Pouch gusset</span>
     <span class="result-value">${document.getElementById("gusset").value || "None"}mm</span>
   </div>
+
+  <div class="divider"></div>
+
+   <div class="result-row">
+    <span class="result-label">Number of pouches around</span>
+    <span class="result-value">${around}</span>
+  </div>
+   <div class="result-row">
+    <span class="result-label">Number of pouches across</span>
+    <span class="result-value">${across}</span>
+  </div>
+
+
+  <div class="divider"></div>
 
    <div class="result-row">
     <span class="result-label">Zipper required </span>
@@ -705,6 +837,82 @@ document.getElementById("result").innerHTML = `
     <span class="result-label">Price per Pouch after VAT</span>
     <span class="result-value">R${ppp.toFixed(2)}</span>
   </div>
+
+  <h3 style="margin-top:20px;">Extra Volume Benefit</h3>
+
+<div class="volume-benefit-grid">
+
+  <div class="volume-box">
+    <div class="volume-qty">
+      ${quantity.toLocaleString()} pouches
+    </div>
+
+    <div class="volume-price">
+      R${ppp.toFixed(2)}
+    </div>
+
+    <div class="volume-label">
+      per pouch
+    </div>
+  </div>
+
+  <div class="volume-box">
+    <div class="volume-qty">
+      ${volume2Qty.toLocaleString()} pouches
+    </div>
+
+    <div class="volume-price">
+      R${volume2Price.toFixed(2)}
+    </div>
+
+    <div class="volume-label">
+      per pouch
+    </div>
+  </div>
+
+  <div class="volume-box">
+    <div class="volume-qty">
+      ${volume3Qty.toLocaleString()} pouches
+    </div>
+
+    <div class="volume-price">
+      R${volume3Price.toFixed(2)}
+    </div>
+
+    <div class="volume-label">
+      per pouch
+    </div>
+  </div>
+
+   <div class="volume-box">
+    <div class="volume-qty">
+      ${volume4Qty.toLocaleString()} pouches
+    </div>
+
+    <div class="volume-price">
+      R${volume4Price.toFixed(2)}
+    </div>
+
+    <div class="volume-label">
+      per pouch
+    </div>
+  </div>
+
+   <div class="volume-box">
+    <div class="volume-qty">
+      ${volume5Qty.toLocaleString()} pouches
+    </div>
+
+    <div class="volume-price">
+      R${volume5Price.toFixed(2)}
+    </div>
+
+    <div class="volume-label">
+      per pouch
+    </div>
+  </div>
+
+</div>
 
 </div>
 `;

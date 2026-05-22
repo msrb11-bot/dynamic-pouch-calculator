@@ -232,3 +232,37 @@ button:disabled { background: #9ca3af; cursor: not-allowed; }
   .totals { max-width: 100%; }
   .row.row-1, .row.row-2, .row.row-3 { grid-template-columns: 1fr !important; }
 }
+
+.volume-benefit-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 14px;
+  margin-top: 15px;
+}
+
+.volume-box {
+  background: #111827;
+  border-radius: 12px;
+  padding: 18px;
+  text-align: center;
+  border: 1px solid #1f2937;
+}
+
+.volume-qty {
+  font-size: 18px;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 10px;
+}
+
+.volume-price {
+  font-size: 24px;
+  font-weight: 800;
+  color: #22c55e;
+}
+
+.volume-label {
+  font-size: 13px;
+  color: #9ca3af;
+  margin-top: 5px;
+}
